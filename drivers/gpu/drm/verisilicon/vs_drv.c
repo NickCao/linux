@@ -258,6 +258,7 @@ static SIMPLE_DEV_PM_OPS(vs_drm_pm_ops, vs_drm_suspend, vs_drm_resume);
 
 static const struct of_device_id vs_drm_dt_ids[] = {
 	{ .compatible = "verisilicon,display-subsystem", },
+	{},
 };
 
 MODULE_DEVICE_TABLE(of, vs_drm_dt_ids);
