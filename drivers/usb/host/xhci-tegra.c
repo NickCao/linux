@@ -243,6 +243,7 @@ struct tegra_xusb_soc {
 	bool scale_ss_clock;
 	bool has_ipfs;
 	bool lpm_support;
+	bool skip_mbox_config;
 	bool otg_reset_sspi;
 
 	bool has_bar2;
@@ -1246,6 +1247,9 @@ static int __tegra_xusb_enable_firmware_messages(struct tegra_xusb *tegra)
 {
 	struct tegra_xusb_mbox_msg msg;
 	int err;
+
+	if (tegra->soc->skip_mbox_config)
+		return 0;
 
 	/* Enable firmware messages from controller. */
 	msg.cmd = MBOX_CMD_MSG_ENABLED;
@@ -2677,6 +2681,7 @@ static const struct tegra_xusb_soc tegra264_soc = {
 		.owner = XUSB_BAR2_ARU_MBOX_OWNER,
 		.smi_intr = XUSB_BAR2_ARU_SMI_INTR,
 	},
+	.skip_mbox_config = true,
 	.lpm_support = true,
 	.has_bar2 = true,
 };
