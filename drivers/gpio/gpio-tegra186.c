@@ -1366,6 +1366,7 @@ static const struct tegra_gpio_soc tegra264_aon_soc = {
 	.instance = 1,
 	.num_irqs_per_bank = 8,
 	.has_vm_support = true,
+	.has_gte = true,
 };
 
 #define TEGRA256_MAIN_GPIO_PORT(_name, _bank, _port, _pins) \
