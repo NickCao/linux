@@ -3187,6 +3187,7 @@ static void wke_clear_wake_status(struct tegra_pmc *pmc)
 
 static void tegra186_pmc_wake_syscore_resume(void *data)
 {
+	struct tegra_pmc *pmc = data;
 	unsigned int i;
 	u32 mask;
 
@@ -3201,6 +3202,7 @@ static void tegra186_pmc_wake_syscore_resume(void *data)
 
 static int tegra186_pmc_wake_syscore_suspend(void *data)
 {
+	struct tegra_pmc *pmc = data;
 	unsigned int i;
 
 	/* Check if there are unhandled wake IRQs */
@@ -3209,6 +3211,7 @@ static int tegra186_pmc_wake_syscore_suspend(void *data)
 			dev_warn(pmc->dev,
 				 "Unhandled wake IRQs pending vector[%u]: 0x%x\n",
 				 i, pmc->wake_status[i]);
+
 	wke_read_sw_wake_status(pmc);
 
 	/* flip the wakeup trigger for dual-edge triggered pads
@@ -3882,6 +3885,7 @@ static const struct tegra_pmc_regs tegra186_pmc_regs = {
 static void tegra186_pmc_init(struct tegra_pmc *pmc)
 {
 	pmc->syscore.ops = &tegra186_pmc_wake_syscore_ops;
+	pmc->syscore.data = pmc;
 	register_syscore(&pmc->syscore);
 }
 
